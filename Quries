@@ -1,0 +1,280 @@
+CREATE DATABASE University;
+USE University;
+
+
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE Professors (
+    ProfessorID INT PRIMARY KEY,
+    FirstName VARCHAR(100),
+    LastName VARCHAR(100),
+    DepartmentID INT,
+    Salary DECIMAL(10, 2),
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    FirstName VARCHAR(100),
+    LastName VARCHAR(100),
+    Age INT,
+    Gender VARCHAR(10),
+    DepartmentID INT,
+    EnrollmentDate DATE,
+    Address VARCHAR(255),
+    Email VARCHAR(100),
+    Contact VARCHAR(15),
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+
+CREATE TABLE Courses (
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(255),
+    DepartmentID INT,
+    ProfessorID INT,
+    Credits INT,
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID),
+    FOREIGN KEY (ProfessorID) REFERENCES Professors(ProfessorID)
+);
+
+
+CREATE TABLE Enrollments (
+    EnrollmentID INT PRIMARY KEY,
+    StudentID INT,
+    CourseID INT,
+    EnrollmentDate DATE,
+    Grade CHAR(1),
+    FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+
+
+INSERT INTO Departments (DepartmentID, DepartmentName) VALUES
+(1, 'Computer Science'),
+(2, 'Mathematics'),
+(3, 'Physics'),
+(4, 'Chemistry'),
+(5, 'Biology'),
+(6, 'Engineering'),
+(7, 'Business Administration'),
+(8, 'Psychology'),
+(9, 'Literature'),
+(10, 'History');
+
+
+INSERT INTO Professors (ProfessorID, FirstName, LastName, DepartmentID, Salary) VALUES
+(1, 'John', 'Doe', 1, 75000),
+(2, 'Jane', 'Smith', 2, 80000),
+(3, 'Michael', 'Johnson', 3, 85000),
+(4, 'Alice', 'Brown', 4, 70000),
+(5, 'David', 'Wilson', 5, 76000),
+(6, 'Sarah', 'Davis', 6, 72000),
+(7, 'Paul', 'Miller', 7, 78000),
+(8, 'Nancy', 'Taylor', 8, 69000),
+(9, 'George', 'Anderson', 9, 83000),
+(10, 'Emily', 'Martin', 10, 81000);
+
+
+INSERT INTO Students (StudentID, FirstName, LastName, Age, Gender, DepartmentID, EnrollmentDate, Address, Email, Contact) VALUES
+(1, 'Ali', 'Khan', 22, 'Male', 1, '2022-09-01', 'Lahore, Pakistan', 'ali23@gmail.com', '03268745290'),
+(2, 'Ahmed', 'Ali', 23, 'Male', 1, '2021-09-01', 'Karachi, Pakistan', 'ahmed23@gmail.com', '03268745291'),
+(3, 'Sara', 'Imran', 21, 'Female', 2, '2022-09-01', 'Islamabad, Pakistan', 'sara23@gmail.com', '03268745292'),
+(4, 'Fatima', 'Rehman', 24, 'Female', 3, '2020-09-01', 'Rawalpindi, Pakistan', 'fatima23@gmail.com', '03268745293'),
+(5, 'Bilal', 'Ahmad', 25, 'Male', 4, '2021-09-01', 'Faisalabad, Pakistan', 'bilal23@gmail.com', '03268745294'),
+(6, 'Muneeb', 'Shah', 22, 'Male', 5, '2022-09-01', 'Multan, Pakistan', 'muneeb23@gmail.com', '03268745295'),
+(7, 'Hina', 'Khan', 26, 'Female', 6, '2022-09-01', 'Sialkot, Pakistan', 'hina23@gmail.com', '03268745296'),
+(8, 'Tariq', 'Javed', 22, 'Male', 7, '2021-09-01', 'Gujranwala, Pakistan', 'tariq23@gmail.com', '03268745297'),
+(9, 'Zainab', 'Bibi', 23, 'Female', 8, '2020-09-01', 'Peshawar, Pakistan', 'zainab23@gmail.com', '03268745298'),
+(10, 'Usman', 'Saleem', 21, 'Male', 9, '2022-09-01', 'Quetta, Pakistan', 'usman23@gmail.com', '03268745299');
+
+
+INSERT INTO Courses (CourseID, CourseName, DepartmentID, ProfessorID, Credits) VALUES
+(1, 'Data Structures', 1, 1, 3),
+(2, 'Calculus I', 2, 2, 4),
+(3, 'Quantum Mechanics', 3, 3, 3),
+(4, 'Organic Chemistry', 4, 4, 3),
+(5, 'Genetics', 5, 5, 4),
+(6, 'Electrical Engineering', 6, 6, 4),
+(7, 'Business Management', 7, 7, 3),
+(8, 'Introduction to Psychology', 8, 8, 3),
+(9, 'English Literature', 9, 9, 3),
+(10, 'Modern History', 10, 10, 2);
+
+
+INSERT INTO Enrollments (EnrollmentID, StudentID, CourseID, EnrollmentDate, Grade) VALUES
+(1, 1, 1, '2022-09-05', 'A'),
+(2, 2, 2, '2021-09-05', 'B'),
+(3, 3, 3, '2022-09-05', 'A'),
+(4, 4, 4, '2020-09-05', 'C'),
+(5, 5, 5, '2021-09-05', 'B'),
+(6, 6, 6, '2022-09-05', 'A'),
+(7, 7, 7, '2022-09-05', 'B'),
+(8, 8, 8, '2020-09-05', 'A'),
+(9, 9, 9, '2022-09-05', 'C'),
+(10, 10, 10, '2022-09-05', 'A');
+
+
+--select
+SELECT * FROM Students;
+
+--select distinct
+SELECT DISTINCT DepartmentID FROM Students;
+
+--where
+SELECT * FROM Students WHERE Age > 21;
+
+--order by
+SELECT * FROM Professors ORDER BY Salary DESC;
+
+--and,or,not
+SELECT * FROM Students WHERE Age > 21 AND DepartmentID = 1;
+SELECT * FROM Students WHERE DepartmentID = 1 OR DepartmentID = 2;
+SELECT * FROM Students WHERE NOT Gender = 'Male';
+
+--null values
+SELECT * FROM Enrollments WHERE Grade IS NULL;
+
+--update
+UPDATE Students SET Age = 23 WHERE StudentID = 1;
+
+--delete
+DELETE FROM Students WHERE StudentID = 5;
+
+--select top
+SELECT TOP 3 * FROM Courses ORDER BY Credits DESC;
+
+--min,max,avg,sum,count
+SELECT MIN(Salary) FROM Professors;
+SELECT MAX(Salary) FROM Professors;
+SELECT AVG(Salary) FROM Professors;
+SELECT SUM(Salary) FROM Professors;
+SELECT COUNT(*) FROM Students;
+
+--like/wildcards
+SELECT * FROM Students WHERE FirstName LIKE 'A%';
+
+--in,between
+SELECT * FROM Courses WHERE Credits IN (3, 4);
+SELECT * FROM Students WHERE Age BETWEEN 21 AND 23;
+
+--aliases
+SELECT FirstName AS 'Student First Name', LastName AS 'Student Last Name' FROM Students;
+
+--inner join
+SELECT Students.FirstName, Students.LastName
+FROM Students 
+INNER JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+INNER JOIN Courses ON Enrollments.CourseID=Courses.CourseID;
+
+--left join
+SELECT Students.FirstName, Students.LastName, Courses.CourseName
+FROM Students 
+LEFT JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+LEFT JOIN Courses ON Enrollments.CourseID = Courses.CourseID;
+
+--right join
+SELECT Students.FirstName, Students.LastName, Courses.CourseName
+FROM Students 
+RIGHT JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+RIGHT JOIN Courses ON Enrollments.CourseID = Courses.CourseID;
+
+--full join
+SELECT Students.FirstName, Students.LastName, Courses.CourseName
+FROM Students
+FULL JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+FULL JOIN Courses ON Enrollments.CourseID = Courses.CourseID;
+
+--union
+SELECT CourseName FROM Courses WHERE DepartmentID = 1
+UNION
+SELECT CourseName FROM Courses WHERE DepartmentID = 2;
+
+--union all
+SELECT FirstName FROM Professors
+UNION ALL
+SELECT CourseName FROM Courses;
+
+--group by/having
+SELECT DepartmentID, COUNT(*) AS NumberOfStudents
+FROM Students
+GROUP BY DepartmentID
+HAVING COUNT(*) > 1;
+
+--exists,any,all
+SELECT * FROM Students WHERE EXISTS (SELECT * FROM Enrollments WHERE StudentID = Students.StudentID);
+SELECT * FROM Students WHERE Age > ANY (SELECT Age FROM Students WHERE DepartmentID = 1);
+SELECT * FROM Students WHERE Age > ALL (SELECT Age FROM Students WHERE DepartmentID = 1);
+
+--select into
+SELECT * INTO StudentsBackup FROM Students;
+
+--case
+SELECT FirstName, LastName,
+       CASE
+           WHEN Age < 21 THEN 'Freshman'
+           WHEN Age BETWEEN 21 AND 23 THEN 'Adult'
+           ELSE 'Senior'
+       END AS YearLevel
+FROM Students;
+
+--stored procedures
+CREATE PROCEDURE GetProfessorsByDepartment @DeptID INT
+AS
+BEGIN
+    SELECT FirstName, LastName, Salary
+    FROM Professors
+    WHERE DepartmentID = @DeptID;
+END;
+
+EXEC GetProfessorsByDepartment 1;
+
+--functions
+CREATE FUNCTION displayStudent @StudentID INT
+RETURNS TABLE
+AS
+RETURN 
+    SELECT * FROM Students
+    WHERE StudentID = @StudentID;
+GO
+
+SELECT * FROM displayStudent(2);
+
+
+
+--index
+CREATE INDEX idx_student_name ON Students (FirstName, LastName);
+
+--transaction
+BEGIN TRANSACTION
+BEGIN TRY
+UPDATE Students SET Age = 25 WHERE StudentID = 3;
+COMMIT
+END TRY
+BEGIN CATCH
+Rollback
+print ERROR_MESSAGE()
+End CATCH
+
+--trigger
+CREATE TRIGGER UpdateGrade
+ON Enrollments
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE Enrollments set Grade='B' where EnrollmentID=1;
+END;
+
+--view
+CREATE VIEW View1 AS
+SELECT * 
+FROM Students
+WHERE StudentID <7;
+
+SELECT FirstName
+FROM View1
+WHERE StudentID = 5;
